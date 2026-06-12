@@ -1,0 +1,108 @@
+# 사이트 공통 설정
+# 배포 도메인 확정 후 BASE_URL 을 실제 도메인으로 변경하세요.
+BASE_URL = "https://www.seongnam-ganda.example.com"
+
+BRAND = "간다GO"
+PHONE = "0508-202-4719"
+PHONE_DISPLAY = "0508-202-4719"
+
+# 상단 메뉴 — 하위 메뉴에는 키워드를 반복하지 않고 지역명·역명만 표시한다.
+NAV = [
+    ("홈", "/", []),
+    ("성남 출장마사지", "/massage/", [
+        ("출장마사지 안내", "/massage/#service"),
+        ("홈타이 안내", "/massage/#hometai"),
+        ("전지역 방문 안내", "/massage/#coverage"),
+        ("지하철역 인근 안내", "/massage/#stations"),
+        ("예약 가능 시간", "/massage/#hours"),
+        ("코스 선택 안내", "/massage/#course"),
+        ("이용 전 확인사항", "/massage/#check"),
+        ("위생·안전 안내", "/massage/#safety"),
+        ("자주 묻는 질문", "/massage/#faq"),
+    ]),
+    ("지역별 안내", "/seongnam/", [
+        ("성남 전체", "/seongnam/"),
+        ("수정구", "/seongnam/sujeong-gu/"),
+        ("중원구", "/seongnam/jungwon-gu/"),
+        ("분당구", "/seongnam/bundang-gu/"),
+    ]),
+    ("지하철역별 안내", "/seongnam/stations/", [
+        ("역 전체", "/seongnam/stations/"),
+        ("모란역", "/seongnam/stations/moran-station/"),
+        ("야탑역", "/seongnam/stations/yatap-station/"),
+        ("서현역", "/seongnam/stations/seohyeon-station/"),
+        ("수내역", "/seongnam/stations/sunae-station/"),
+        ("정자역", "/seongnam/stations/jeongja-station/"),
+        ("미금역", "/seongnam/stations/migeum-station/"),
+        ("오리역", "/seongnam/stations/ori-station/"),
+        ("이매역", "/seongnam/stations/imae-station/"),
+        ("판교역", "/seongnam/stations/pangyo-station/"),
+        ("성남역", "/seongnam/stations/seongnam-station/"),
+        ("가천대역", "/seongnam/stations/gachon-univ-station/"),
+        ("태평역", "/seongnam/stations/taepyeong-station/"),
+        ("신흥역", "/seongnam/stations/sinheung-station/"),
+        ("수진역", "/seongnam/stations/sujin-station/"),
+        ("단대오거리역", "/seongnam/stations/dandaeogeori-station/"),
+        ("남한산성입구역", "/seongnam/stations/namhansanseong-entrance-station/"),
+        ("산성역", "/seongnam/stations/sanseong-station/"),
+        ("남위례역", "/seongnam/stations/namwirye-station/"),
+    ]),
+    ("테마별 안내", "/themes/", [
+        ("전체 테마", "/themes/"),
+        ("스웨디시", "/themes/swedish/"),
+        ("로미로미", "/themes/lomilomi/"),
+        ("타이마사지", "/themes/thai/"),
+        ("중국마사지", "/themes/chinese/"),
+        ("아로마테라피", "/themes/aroma/"),
+        ("홈케어", "/themes/homecare/"),
+        ("호텔식마사지", "/themes/hotel-style/"),
+        ("발마사지", "/themes/foot/"),
+        ("스포츠·경락", "/themes/sports/"),
+        ("스킨케어", "/themes/skincare/"),
+        ("왁싱", "/themes/waxing/"),
+        ("커플 관리", "/themes/couple/"),
+        ("24시간", "/themes/24hours/"),
+        ("수면 가능", "/themes/overnight/"),
+    ]),
+    ("코스안내", "/courses/", [
+        ("전체 코스", "/courses/"),
+        ("피로 회복 관리", "/courses/#recovery"),
+        ("아로마 관리", "/courses/#aroma"),
+        ("스포츠 관리", "/courses/#sports"),
+        ("홈타이 코스", "/courses/#hometai"),
+        ("커플·가족 방문 관리", "/courses/#couple"),
+        ("기업·단체 방문 관리", "/courses/#group"),
+        ("가격 안내", "/courses/#price"),
+        ("코스 선택 가이드", "/courses/#guide"),
+    ]),
+    ("예약안내", "/reservation/", [
+        ("예약 방법", "/reservation/#how"),
+        ("예약 가능 시간", "/reservation/#hours"),
+        ("방문 가능 장소", "/reservation/#place"),
+        ("결제 안내", "/reservation/#payment"),
+        ("변경·취소 안내", "/reservation/#change"),
+        ("예약 전 체크사항", "/reservation/#check"),
+    ]),
+    ("이용가이드", "/guide/", [
+        ("처음 이용하시는 분", "/guide/#first"),
+        ("방문 전 준비사항", "/guide/#prepare"),
+        ("위생 및 안전 기준", "/guide/#hygiene"),
+        ("관리 후 주의사항", "/guide/#after"),
+        ("금지행위 안내", "/guide/#prohibited"),
+        ("이용 FAQ", "/guide/#faq"),
+    ]),
+    ("후기", "/reviews/", [
+        ("전체 후기", "/reviews/"),
+        ("지역별 후기", "/reviews/#area"),
+        ("역세권 후기", "/reviews/#station"),
+        ("후기 작성 안내", "/reviews/#write"),
+    ]),
+    ("고객센터", "/support/", [
+        ("공지사항", "/support/#notice"),
+        ("자주 묻는 질문", "/support/#faq"),
+        ("1:1 문의", "/support/#contact"),
+        ("제휴·기업 문의", "/support/#biz"),
+        ("개인정보처리방침", "/support/privacy/"),
+        ("이용약관", "/support/terms/"),
+    ]),
+]
