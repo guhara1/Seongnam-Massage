@@ -11,6 +11,8 @@
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/sujeong-gu/yangji-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/sujeong-gu/bokjeong-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/sujeong-gu/changgok-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/sujeong-gu/godeung-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/sujeong-gu/geumto-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/jungwon-gu/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/jungwon-gu/seongnam-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/jungwon-gu/jungang-dong/</loc></url>
@@ -29,13 +31,31 @@
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/yatap-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/gumi-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/geumgok-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/baekhyeon-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/sampyeong-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/pangyo-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/unjeong-dong/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/bundang-gu/daejang-dong/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/moran-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/sujin-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/sinheung-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/dandaeogeori-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/namhansanseong-entrance-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/sanseong-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/namwirye-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/gachon-univ-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/taepyeong-station/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/yatap-station/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/imae-station/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/seohyeon-station/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/sunae-station/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/jeongja-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/migeum-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/ori-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/seongnam/stations/pangyo-station/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/themes/</loc></url>
+  <url><loc>https://www.seongnam-ganda.example.com/themes/swedish/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/massage/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/courses/</loc></url>
   <url><loc>https://www.seongnam-ganda.example.com/reservation/</loc></url>
