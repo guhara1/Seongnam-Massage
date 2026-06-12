@@ -309,7 +309,7 @@ SEOHYEON = _dong(
 
 <section>
 <h2>역세권 참고</h2>
-<p>중심 역은 수인분당선 <a href="/seongnam/stations/seohyeon-station/">서현역</a>이고, 북쪽 단지 일부는 <a href="/seongnam/stations/imae-station/">이매역</a> 생활권과 겹칩니다. 역 앞 건물은 상가와 오피스텔이 섞여 있어 건물명과 호실을 정확히 알려주시는 것이 가장 중요합니다. 역에서 단지까지는 대부분 도보권이라 위치 설명이 어려운 동네는 아니지만, 단지 안 동 번호까지 함께 주시면 도착이 더 빨라집니다.</p>
+<p>중심 역은 수인분당선 <a href="/seongnam/stations/seohyeon-station/">서현역</a>이고, 북쪽 단지 일부는 이매역 생활권과 겹칩니다. 역 앞 건물은 상가와 오피스텔이 섞여 있어 건물명과 호실을 정확히 알려주시는 것이 가장 중요합니다. 역에서 단지까지는 대부분 도보권이라 위치 설명이 어려운 동네는 아니지만, 단지 안 동 번호까지 함께 주시면 도착이 더 빨라집니다.</p>
 </section>
 
 <section>
@@ -366,7 +366,7 @@ IMAE = _dong(
 
 <section>
 <h2>철도 교통의 변화</h2>
-<p>이매동은 수인분당선과 경강선이 만나는 <a href="/seongnam/stations/imae-station/">이매역</a>을 품고 있고, GTX-A가 정차하는 <a href="/seongnam/stations/seongnam-station/">성남역</a>도 가까워 철도 접근성이 부쩍 좋아진 지역입니다. 남쪽 일부 단지는 <a href="/seongnam/stations/yatap-station/">야탑역</a> 생활권과도 겹칩니다. 역이 가까워도 방문은 주소 기준이니, 단지명과 동·호수를 중심으로 알려주세요.</p>
+<p>이매동은 수인분당선과 경강선이 만나는 <a href="/seongnam/stations/imae-station/">이매역</a>을 품고 있고, GTX-A가 정차하는 <a href="/seongnam/stations/seongnam-station/">성남역</a>도 가까워 철도 접근성이 부쩍 좋아진 지역입니다. 남쪽 일부 단지는 야탑역 생활권과도 겹칩니다. 역이 가까워도 방문은 주소 기준이니, 단지명과 동·호수를 중심으로 알려주세요.</p>
 </section>
 
 <section>
@@ -433,7 +433,7 @@ YATAP = _dong(
 
 <section>
 <h2>교통 거점 안내</h2>
-<p>중심 역은 수인분당선 <a href="/seongnam/stations/yatap-station/">야탑역</a>이며, 북쪽으로는 <a href="/seongnam/stations/moran-station/">모란역</a>, 남쪽으로는 <a href="/seongnam/stations/imae-station/">이매역</a>이 이어집니다. 터미널과 역이 같은 블록에 있어 위치 설명이 쉬운 편이지만, 역 주변 오피스텔은 이름이 비슷한 건물이 많으니 도로명 주소까지 알려주시면 정확합니다.</p>
+<p>중심 역은 수인분당선 <a href="/seongnam/stations/yatap-station/">야탑역</a>이며, 북쪽으로는 <a href="/seongnam/stations/moran-station/">모란역</a>, 남쪽으로는 이매역이 이어집니다. 터미널과 역이 같은 블록에 있어 위치 설명이 쉬운 편이지만, 역 주변 오피스텔은 이름이 비슷한 건물이 많으니 도로명 주소까지 알려주시면 정확합니다.</p>
 </section>
 
 <section>
@@ -448,7 +448,7 @@ YATAP = _dong(
 
 <section>
 <h2>함께 보면 좋은 테마</h2>
-<p>늦은 시간 이용은 <a href="/themes/24hours/">24시간</a> 안내가 기본이고, 숙소에서의 편안한 마무리는 <a href="/themes/hotel-style/">호텔식마사지</a>가 어울립니다. 운동 후 회복은 <a href="/themes/sports/">스포츠·경락</a>, 뻣뻣해진 몸을 늘여 푸는 데는 <a href="/themes/thai/">타이마사지</a>를 참고하세요.</p>
+<p>늦은 시간 이용은 <a href="/themes/24hours/">24시간</a> 안내가 기본이고, 숙소에서의 편안한 마무리는 <a href="/themes/hotel-style/">호텔식마사지</a>가 어울립니다. 운동 후 회복은 <a href="/themes/sports/">스포츠·경락</a>, 뻣뻣해진 몸을 늘여 푸는 데는 타이마사지 계열이 어울립니다.</p>
 </section>
 
 <section>
@@ -629,7 +629,7 @@ BAEKHYEON = _dong(
 
 <section>
 <h2>역과 위치 안내</h2>
-<p>중심 역은 신분당선·경강선 <a href="/seongnam/stations/pangyo-station/">판교역</a>이고, GTX-A <a href="/seongnam/stations/seongnam-station/">성남역</a>도 생활권에 닿아 있습니다. 역 주변 고층 건물은 출입구가 여러 방향이라, 건물명과 함께 어느 출입구가 메인인지 알려주시면 도착이 한결 빨라집니다.</p>
+<p>중심 역은 신분당선·경강선 <a href="/seongnam/stations/pangyo-station/">판교역</a>이고, GTX-A가 서는 성남역도 생활권에 닿아 있습니다. 역 주변 고층 건물은 출입구가 여러 방향이라, 건물명과 함께 어느 출입구가 메인인지 알려주시면 도착이 한결 빨라집니다.</p>
 </section>
 
 <section>
@@ -701,7 +701,7 @@ SAMPYEONG = _dong(
 
 <section>
 <h2>가까운 역</h2>
-<p>서쪽으로 <a href="/seongnam/stations/pangyo-station/">판교역</a>, 동쪽으로 <a href="/seongnam/stations/seongnam-station/">성남역</a>이 생활권을 양쪽에서 받칩니다. 다만 오피스 블록은 역에서 걷는 거리가 제법 되니, 건물명과 도로명 주소 기준으로 위치를 알려주시는 편이 정확합니다.</p>
+<p>서쪽으로 <a href="/seongnam/stations/pangyo-station/">판교역</a>, 동쪽으로 성남역이 생활권을 양쪽에서 받칩니다. 다만 오피스 블록은 역에서 걷는 거리가 제법 되니, 건물명과 도로명 주소 기준으로 위치를 알려주시는 편이 정확합니다.</p>
 </section>
 
 <section>
