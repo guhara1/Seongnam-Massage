@@ -130,7 +130,7 @@ SINHEUNG = _dong(
 
 <section>
 <h2>신흥동과 어울리는 관리</h2>
-<p>좁은 공간에서도 매트 하나로 받을 수 있는 <a href="/themes/homecare/">홈케어</a>와 부드러운 압의 <a href="/themes/swedish/">스웨디시</a> 문의가 가장 많고, 굳은 어깨와 허리를 시원하게 풀고 싶은 분들은 <a href="/themes/thai/">타이마사지</a>를 고르십니다. 일을 마치는 시간이 늦다면 <a href="/themes/24hours/">24시간</a> 안내를 함께 봐 두시면 든든합니다.</p>
+<p>좁은 공간에서도 매트 하나로 받을 수 있는 <a href="/themes/homecare/">홈케어</a>와 부드러운 압의 <a href="/themes/swedish/">스웨디시</a> 문의가 가장 많고, 굳은 어깨와 허리를 시원하게 풀고 싶은 분들은 타이마사지 구성을 고르십니다. 일을 마치는 시간이 늦다면 <a href="/themes/24hours/">24시간</a> 안내를 함께 봐 두시면 든든합니다.</p>
 </section>
 
 <section>
@@ -201,7 +201,7 @@ TAEPYEONG = _dong(
 
 <section>
 <h2>많이 선택하는 테마</h2>
-<p>하루의 긴장을 풀어내는 <a href="/themes/swedish/">스웨디시</a>와 향으로 마무리하는 <a href="/themes/aroma/">아로마테라피</a>가 태평동의 단골 선택입니다. 모니터 앞에 오래 앉는 분들은 <a href="/themes/thai/">타이마사지</a>로 어깨를 풀고, 받은 뒤 그대로 잠들고 싶은 날에는 <a href="/themes/overnight/">수면 가능</a> 안내를 참고하시면 됩니다.</p>
+<p>하루의 긴장을 풀어내는 <a href="/themes/swedish/">스웨디시</a>와 향으로 마무리하는 <a href="/themes/aroma/">아로마테라피</a>가 태평동의 단골 선택입니다. 모니터 앞에 오래 앉는 분들은 <a href="/themes/thai/">타이마사지</a>로 어깨를 풀고, 받은 뒤 그대로 잠들고 싶은 날에는 수면 가능 구성을 문의하시면 됩니다.</p>
 </section>
 
 <section>
@@ -257,7 +257,7 @@ SUJIN = _dong(
 
 <section>
 <h2>어울리는 관리 유형</h2>
-<p>종일 서서 일한 다리에는 <a href="/themes/foot/">발마사지</a>가, 뭉친 몸을 강하게 풀고 싶을 때는 <a href="/themes/sports/">스포츠·경락</a>이 잘 맞습니다. 늦은 시간 이용이 잦다면 <a href="/themes/24hours/">24시간</a> 안내를, 집에서 편하게 받는 기본 구성은 <a href="/themes/homecare/">홈케어</a>를 살펴보세요.</p>
+<p>종일 서서 일한 다리에는 <a href="/themes/foot/">발마사지</a>가, 뭉친 몸을 강하게 풀고 싶을 때는 <a href="/themes/sports/">스포츠·경락</a>이 잘 맞습니다. 늦은 시간 이용이 잦다면 <a href="/themes/24hours/">24시간</a> 안내를, 집에서 편하게 받는 기본 구성으로는 홈케어가 무난합니다.</p>
 </section>
 
 <section>
