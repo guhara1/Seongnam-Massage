@@ -1,6 +1,9 @@
 # 사이트 공통 설정
 BASE_URL = "https://seongnam-massage.pages.dev"
 
+# IndexNow 인증 키 — 루트의 {키}.txt 파일과 항상 일치해야 한다 (빌드가 자동 생성).
+INDEXNOW_KEY = "d23a18c6cdcb4ef78795c3fffbaddd03"
+
 BRAND = "간다GO"
 PHONE = "0508-202-4719"
 PHONE_DISPLAY = "0508-202-4719"

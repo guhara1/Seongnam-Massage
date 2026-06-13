@@ -47,8 +47,35 @@ python3 build.py
 - 모든 페이지 본문은 페이지별 고유 작성 (지역명만 바꾼 복붙 없음)
 - 건전 방문 관리 서비스 기준 작성 — 불법·성매매 암시 문구 금지
 
-## 배포 전 해야 할 일
+## 색인(인덱싱) 운영
 
-1. `content/site.py`의 `BASE_URL`을 실제 도메인으로 변경
-2. `python3 build.py` 재실행 (canonical·sitemap·robots.txt에 반영됨)
-3. Google Search Console에 `sitemap.xml` 제출
+빌드(`python3 build.py`)가 자동 생성·갱신하는 것:
+
+- `sitemap.xml` — 색인 페이지 77개, 내용이 실제로 바뀐 페이지만 `lastmod` 갱신
+  (`content-hashes.json`으로 변경 추적)
+- `rss.xml` — 네이버 서치어드바이저 RSS 제출용 피드 (구글도 sitemap 형식으로 인식)
+- `robots.txt` — 전체 허용 + 네이버(Yeti)·구글(Googlebot) 명시 + sitemap/rss 안내
+- `d23a18c6….txt` — IndexNow 인증 키 파일 (`content/site.py`의 `INDEXNOW_KEY`)
+
+### 즉시 색인 통보
+
+- **IndexNow (빙·네이버)**: 페이지가 변경된 푸시마다 GitHub Actions
+  (`.github/workflows/index-notify.yml`)가 자동으로 통보한다. 수동 실행:
+  ```bash
+  python3 scripts/indexnow_submit.py --all        # 전체 URL
+  python3 scripts/indexnow_submit.py <URL ...>    # 특정 URL
+  ```
+- **구글 (IndexNow 미참여)**: `scripts/google_indexing.py` 사용 — 서비스 계정 JSON을
+  만들어 Search Console 속성에 소유자로 추가한 뒤, 저장소 시크릿
+  `GOOGLE_INDEXING_CREDENTIALS`에 JSON 내용을 넣으면 워크플로가 자동 통보한다
+  (일일 기본 할당량 200건). 구글의 sitemap ping 엔드포인트는 2023년 폐기되어
+  사용하지 않는다 — Search Console에 sitemap을 등록해 두면 `lastmod` 기준으로
+  재수집된다.
+
+### 검색엔진 등록 절차 (1회)
+
+1. **구글 Search Console**: 속성 등록 → `sitemap.xml` 제출
+2. **네이버 서치어드바이저**: 소유확인(메인 페이지에 메타 태그 적용됨) →
+   요청 > 사이트맵 제출(`sitemap.xml`) → 요청 > RSS 제출(`rss.xml`)
+3. 배포 후 `https://seongnam-massage.pages.dev/d23a18c6cdcb4ef78795c3fffbaddd03.txt`
+   가 열리는지 확인 (IndexNow 키 인증)

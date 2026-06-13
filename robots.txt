@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
 
+# 네이버 검색로봇
+User-agent: Yeti
+Allow: /
+
+# 구글 검색로봇
+User-agent: Googlebot
+Allow: /
+
+# 구글 이미지 검색
+User-agent: Googlebot-Image
+Allow: /
+
 Sitemap: https://seongnam-massage.pages.dev/sitemap.xml
+Sitemap: https://seongnam-massage.pages.dev/rss.xml

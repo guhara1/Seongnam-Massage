@@ -1,0 +1,53 @@
+# 페이지가 변경된 푸시마다 검색엔진에 즉시 색인 통보
+# - IndexNow: 빙·네이버 (키 파일은 build.py가 사이트 루트에 생성)
+# - 구글 Indexing API: 저장소 시크릿 GOOGLE_INDEXING_CREDENTIALS(서비스 계정 JSON)가 있을 때만 실행
+name: 검색엔진 색인 통보
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "**/index.html"
+      - "sitemap.xml"
+      - "rss.xml"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cloudflare Pages 배포 대기
+        run: sleep 90
+
+      - name: IndexNow 통보 (빙·네이버)
+        run: |
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            python3 scripts/indexnow_submit.py --all
+          else
+            python3 scripts/indexnow_submit.py --changed "${{ github.event.before }}" "${{ github.sha }}" \
+              || python3 scripts/indexnow_submit.py --all
+          fi
+
+      - name: 구글 Indexing API 통보 (시크릿 설정 시)
+        env:
+          CREDS_JSON: ${{ secrets.GOOGLE_INDEXING_CREDENTIALS }}
+        run: |
+          if [ -z "$CREDS_JSON" ]; then
+            echo "GOOGLE_INDEXING_CREDENTIALS 시크릿이 없어 구글 통보는 건너뜁니다."
+            exit 0
+          fi
+          pip install -q google-auth requests
+          printf '%s' "$CREDS_JSON" > /tmp/google-creds.json
+          export GOOGLE_INDEXING_CREDENTIALS=/tmp/google-creds.json
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            python3 scripts/google_indexing.py --all
+          else
+            URLS=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
+              | grep 'index.html$' | sed 's|index.html$||' \
+              | sed 's|^|https://seongnam-massage.pages.dev/|' | head -180)
+            if [ -z "$URLS" ]; then echo "변경 페이지 없음"; exit 0; fi
+            python3 scripts/google_indexing.py $URLS
+          fi
