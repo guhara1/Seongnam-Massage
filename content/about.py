@@ -5,7 +5,7 @@ from .site import BRAND, PHONE, PHONE_DISPLAY
 PAGE = {
     "path": "about/",
     "title": f"{BRAND} 운영 안내 | 운영 원칙과 신뢰 기준",
-    "desc": "성남 방문 관리 간다GO의 운영 안내입니다. 누가 운영하는지, 관리사 교육과 위생 기준, 요금을 투명하게 다루는 방식, 콘텐츠가 만들어지는 과정을 공개합니다.",
+    "desc": "성남 방문 관리 간다GO의 운영 안내입니다. 운영 주체와 관리사 위생 기준, 투명한 요금 방식, 콘텐츠 제작 과정을 공개합니다.",
     "h1": "간다GO 운영 안내",
     "breadcrumb": [("운영 안내", None)],
     "body": f"""
