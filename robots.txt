@@ -13,5 +13,5 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
-Sitemap: https://seongnam-massage.pages.dev/sitemap.xml
-Sitemap: https://seongnam-massage.pages.dev/rss.xml
+Sitemap: https://seongnam-massage.netlify.app/sitemap.xml
+Sitemap: https://seongnam-massage.netlify.app/rss.xml
