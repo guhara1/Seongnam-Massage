@@ -77,5 +77,5 @@ python3 build.py
 1. **구글 Search Console**: 속성 등록 → `sitemap.xml` 제출
 2. **네이버 서치어드바이저**: 소유확인(메인 페이지에 메타 태그 적용됨) →
    요청 > 사이트맵 제출(`sitemap.xml`) → 요청 > RSS 제출(`rss.xml`)
-3. 배포 후 `https://seongnam-massage.pages.dev/d23a18c6cdcb4ef78795c3fffbaddd03.txt`
+3. 배포 후 `https://seongnam-massage.netlify.app/d23a18c6cdcb4ef78795c3fffbaddd03.txt`
    가 열리는지 확인 (IndexNow 키 인증)

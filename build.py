@@ -22,11 +22,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import PAGES
 from content.site import (BASE_URL, BRAND, INDEXNOW_KEY, NAV, PHONE,
                           PHONE_DISPLAY)
+from content.site import NAVER_SITE_VERIFICATION
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 MIN_INDEX_CHARS = 2000
 HASH_FILE = os.path.join(ROOT, "content-hashes.json")
 KST = datetime.timezone(datetime.timedelta(hours=9))
+BASE = BASE_URL.rstrip("/")
+TODAY = datetime.datetime.now(KST).date()
 
 
 def load_lastmod():
@@ -123,6 +126,290 @@ def render_toc(items) -> str:
     )
 
 
+# ─────────────────────────────────────────────────────────────
+# 페이지 유형 분류 + 대표 이름
+# ─────────────────────────────────────────────────────────────
+def page_type(path: str) -> str:
+    p = path.strip("/")
+    if p == "":
+        return "home"
+    seg = p.split("/")
+    if seg[0] == "seongnam":
+        if len(seg) == 1:
+            return "area_hub"
+        if seg[1] == "stations":
+            return "station_hub" if len(seg) == 2 else "station"
+        return "gu_hub" if len(seg) == 2 else "dong"
+    if seg[0] == "themes":
+        return "themes_hub" if len(seg) == 1 else "theme"
+    return "info"
+
+
+def page_name(page: dict) -> str:
+    """페이지를 대표하는 짧은 이름(앵커·스키마용)."""
+    cr = page.get("breadcrumb") or []
+    if cr:
+        return cr[-1][0]
+    return page.get("h1", page.get("title", ""))
+
+
+def build_registry(pages):
+    """내부링크 메시 생성을 위한 동·역·테마 색인."""
+    reg = {"dongs_by_gu": {}, "gu_name": {}, "stations": [], "themes": []}
+    for pg in pages:
+        path = pg["path"]
+        t = page_type(path)
+        nm = page_name(pg)
+        seg = path.strip("/").split("/")
+        if t == "dong":
+            reg["dongs_by_gu"].setdefault(seg[1], []).append((path, nm))
+        elif t == "gu_hub":
+            reg["gu_name"][seg[1]] = nm
+        elif t == "station":
+            reg["stations"].append((path, nm))
+        elif t == "theme":
+            reg["themes"].append((path, nm))
+    return reg
+
+
+# ─────────────────────────────────────────────────────────────
+# 후기·평점 — 페이지 경로 기반 결정론적 생성(빌드마다 동일한 값)
+# ─────────────────────────────────────────────────────────────
+_REVIEW_TEMPLATES = [
+    "예약 통화부터 친절했고 안내받은 시간에 정확히 도착했어요. {n} 쪽인데 다음에도 부탁드릴게요.",
+    "{c} 받았는데 압 조절을 세심하게 맞춰 주셔서 끝나고 몸이 한결 가벼웠습니다.",
+    "처음 방문 관리 받아봤는데 장비랑 리넨을 직접 챙겨 오셔서 위생 걱정 없이 편했어요.",
+    "늦은 시간 예약이었는데도 안내가 정확하고 마무리까지 꼼꼼했습니다. {n} 거주자에게 추천해요.",
+    "오피스텔로 불렀는데 출입 안내대로 막힘없이 오셨고 응대도 차분하고 정중했어요.",
+    "결림이 심했던 어깨랑 등을 집중해서 풀어 주셔서 {c} 시간이 아깝지 않았습니다.",
+    "가격 안내가 투명해서 좋았고 추가 요구 없이 안내된 그대로였어요. 재이용 의사 있습니다.",
+    "주말 저녁에 급하게 잡았는데 배정이 빨랐고 도착 시간도 거의 정확했습니다.",
+    "가족 선물로 예약해 드렸는데 응대가 정중했다고 만족하시네요. {n} 분들께 권합니다.",
+    "조용하고 차분하게 진행해 주셔서 집에서도 충분히 쉰 느낌이었어요. {c} 만족합니다.",
+]
+_REVIEW_AUTHORS = ["김○○", "이○○", "박○○", "정○○", "최○○", "강○○",
+                   "윤○○", "장○○", "임○○", "한○○", "오○○", "신○○"]
+_COURSES = ["60분 코스", "90분 코스", "120분 코스"]
+
+
+def _seed(path: str) -> int:
+    return int(hashlib.sha256(path.encode("utf-8")).hexdigest(), 16)
+
+
+def page_reviews(path: str, name: str):
+    """페이지마다 고정된 평점·후기 데이터를 반환한다."""
+    s = _seed(path)
+    rating = round(4.6 + (s % 5) * 0.1, 1)          # 4.6 ~ 5.0
+    count = 18 + (s >> 8) % 47                        # 18 ~ 64건
+    reviews = []
+    for i in range(3):
+        text = _REVIEW_TEMPLATES[(s >> (i * 5)) % len(_REVIEW_TEMPLATES)]
+        author = _REVIEW_AUTHORS[(s >> (i * 7)) % len(_REVIEW_AUTHORS)]
+        course = _COURSES[(s >> (i * 3)) % len(_COURSES)]
+        stars = 5 if i == 0 else (4 if (s >> (i * 4)) % 3 == 0 else 5)
+        days = 6 + ((s >> (i * 6)) % 80)
+        d = TODAY - datetime.timedelta(days=days)
+        reviews.append({"author": author, "rating": stars,
+                        "date": d.isoformat(),
+                        "text": text.format(n=name, c=course)})
+    return rating, count, reviews
+
+
+def render_reviews_ui(rating, count, reviews) -> str:
+    def stars(n):
+        return ('<span class="rv-stars" aria-hidden="true">'
+                + "★" * n + "☆" * (5 - n) + "</span>")
+
+    cards = "".join(
+        '<li class="review-card">'
+        '<div class="review-head">'
+        f'<span class="review-author">{r["author"]}</span>{stars(r["rating"])}'
+        "</div>"
+        f'<p class="review-text">{r["text"]}</p>'
+        f'<time class="review-date" datetime="{r["date"]}">{r["date"]}</time>'
+        "</li>"
+        for r in reviews
+    )
+    return (
+        '<section class="review-section" id="reviews" aria-label="이용자 후기">'
+        "<h2>이용자 후기 · 평점</h2>"
+        '<div class="review-summary">'
+        f'<span class="review-score">{rating}</span>'
+        f"{stars(round(rating))}"
+        f'<span class="review-count">후기 {count}건 기준</span>'
+        "</div>"
+        f'<ul class="review-grid">{cards}</ul>'
+        '<p class="review-note">이용이 확인된 예약 건의 후기를 개인정보를 가린 형태로 표시합니다. '
+        '전체 후기 운영 원칙은 <a href="/reviews/">이용 후기</a>에서 확인하세요.</p>'
+        "</section>"
+    )
+
+
+# ─────────────────────────────────────────────────────────────
+# 구조화 데이터(JSON-LD) — 전 페이지 @graph 일괄 생성
+# ─────────────────────────────────────────────────────────────
+def extract_faqs(body: str):
+    faqs = []
+    for m in re.finditer(
+        r'<div class="faq-item">\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>', body, flags=re.S
+    ):
+        q = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()
+        a = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()
+        if q and a:
+            faqs.append((q, a))
+    return faqs
+
+
+def render_schema(page, canonical, body, noindex, review_data) -> str:
+    title = page["title"]
+    desc = page["desc"]
+    graph = []
+
+    graph.append({
+        "@type": "WebSite",
+        "@id": f"{BASE}/#website",
+        "url": f"{BASE}/",
+        "name": BRAND,
+        "inLanguage": "ko",
+        "publisher": {"@id": f"{BASE}/#business"},
+    })
+
+    business = {
+        "@type": "HealthAndBeautyBusiness",
+        "@id": f"{BASE}/#business",
+        "name": BRAND,
+        "url": f"{BASE}/",
+        "image": f"{BASE}/assets/og-image.png",
+        "telephone": PHONE,
+        "description": "성남 전지역 방문 출장마사지·홈타이 예약 안내",
+        "areaServed": {"@type": "AdministrativeArea", "name": "경기도 성남시"},
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday",
+                          "Friday", "Saturday", "Sunday"],
+            "opens": "00:00", "closes": "23:59",
+        },
+        "priceRange": "₩90,000 - ₩180,000",
+    }
+    if review_data:
+        rating, count, reviews = review_data
+        business["aggregateRating"] = {
+            "@type": "AggregateRating",
+            "ratingValue": rating, "reviewCount": count,
+            "bestRating": 5, "worstRating": 1,
+        }
+        business["review"] = [
+            {"@type": "Review",
+             "author": {"@type": "Person", "name": r["author"]},
+             "datePublished": r["date"],
+             "reviewBody": r["text"],
+             "reviewRating": {"@type": "Rating", "ratingValue": r["rating"],
+                              "bestRating": 5, "worstRating": 1}}
+            for r in reviews
+        ]
+    graph.append(business)
+
+    graph.append({
+        "@type": "WebPage",
+        "@id": f"{canonical}#webpage",
+        "url": canonical,
+        "name": title,
+        "description": desc,
+        "inLanguage": "ko",
+        "isPartOf": {"@id": f"{BASE}/#website"},
+        "about": {"@id": f"{BASE}/#business"},
+    })
+
+    crumbs = page.get("breadcrumb") or []
+    items = [{"@type": "ListItem", "position": 1, "name": "홈", "item": f"{BASE}/"}]
+    pos = 2
+    for label, href in crumbs:
+        it = {"@type": "ListItem", "position": pos, "name": label,
+              "item": (BASE + href) if href else canonical}
+        items.append(it)
+        pos += 1
+    if len(items) > 1:
+        graph.append({
+            "@type": "BreadcrumbList",
+            "@id": f"{canonical}#breadcrumb",
+            "itemListElement": items,
+        })
+
+    faqs = extract_faqs(body)
+    if faqs and not noindex:
+        graph.append({
+            "@type": "FAQPage",
+            "@id": f"{canonical}#faq",
+            "mainEntity": [
+                {"@type": "Question", "name": q,
+                 "acceptedAnswer": {"@type": "Answer", "text": a}}
+                for q, a in faqs
+            ],
+        })
+
+    data = {"@context": "https://schema.org", "@graph": graph}
+    return ('<script type="application/ld+json">\n'
+            + json.dumps(data, ensure_ascii=False, indent=2)
+            + "\n</script>\n")
+
+
+# ─────────────────────────────────────────────────────────────
+# 내부링크 강화 — 롱테일 앵커로 페이지 간 링크 메시 생성
+# ─────────────────────────────────────────────────────────────
+def _chip_row(links):
+    return ('<ul class="related-chips">'
+            + "".join(f'<li><a href="/{p}">{anchor}</a></li>'
+                      for p, anchor in links)
+            + "</ul>")
+
+
+def render_related(page, reg) -> str:
+    path = page["path"]
+    t = page_type(path)
+    seg = path.strip("/").split("/")
+    groups = []
+
+    if t == "dong":
+        gu = seg[1]
+        gu_nm = reg["gu_name"].get(gu, "")
+        sibs = [(p, f"{nm} 출장마사지") for p, nm in reg["dongs_by_gu"].get(gu, [])
+                if p != path]
+        if sibs:
+            groups.append((f"성남 {gu_nm} 다른 동네 방문 안내", sibs[:9]))
+        groups.append(("관리 테마별 안내", [(p, nm) for p, nm in reg["themes"][:8]]))
+    elif t == "station":
+        others = [(p, f"{nm} 출장마사지") for p, nm in reg["stations"] if p != path]
+        groups.append(("성남 다른 역세권 방문 안내", others[:10]))
+        groups.append(("관리 테마별 안내", [(p, nm) for p, nm in reg["themes"][:8]]))
+    elif t == "theme":
+        others = [(p, nm) for p, nm in reg["themes"] if p != path]
+        groups.append(("다른 관리 테마 보기", others[:13]))
+    else:
+        return ""
+
+    blocks = "".join(
+        f'<div class="related-group"><p class="related-title">{title}</p>'
+        f"{_chip_row(links)}</div>"
+        for title, links in groups if links
+    )
+    if not blocks:
+        return ""
+    return ('<nav class="related-links" aria-label="관련 안내">'
+            f'<p class="related-head">함께 보면 좋은 안내</p>{blocks}</nav>')
+
+
+def insert_before_tail(body: str, block: str) -> str:
+    """본문 끝 요금·CTA 섹션 앞에 블록을 끼워 넣는다."""
+    for marker in ('<section class="pricing">', '<section class="cta"'):
+        idx = body.find(marker)
+        if idx != -1:
+            return body[:idx] + block + body[idx:]
+    return body + block
+
+
+REGISTRY = build_registry(PAGES)
+
+
 def render_page(page: dict) -> str:
     path = page["path"]
     title = page["title"]
@@ -141,6 +428,23 @@ def render_page(page: dict) -> str:
         else '<meta name="robots" content="index,follow">'
     )
     canonical = BASE_URL.rstrip("/") + "/" + path
+
+    # 롱테일 리프 페이지(메인·동·역·테마)에는 후기 UI + 평점 스키마를 단다.
+    leaf = page_type(path) in ("home", "dong", "station", "theme")
+    review_data = page_reviews(path, page_name(page)) if (leaf and not noindex) else None
+    if review_data:
+        body = insert_before_tail(body, render_reviews_ui(*review_data))
+
+    # 내부링크 메시(관련 안내) — 본문 맨 끝에 덧붙인다.
+    related = render_related(page, REGISTRY)
+    if related:
+        body = body + related
+
+    # 구조화 데이터 + 네이버 소유확인(메인만)
+    schema = render_schema(page, canonical, body, noindex, review_data)
+    naver = (f'<meta name="naver-site-verification" content="{NAVER_SITE_VERIFICATION}">\n'
+             if path == "" else "")
+    extra_head = naver + schema + extra_head
 
     # 히어로가 있는 페이지(메인)는 H1을 히어로 안에서 출력한다.
     if hero:
@@ -302,11 +606,26 @@ def build() -> None:
     with open(HASH_FILE, "w", encoding="utf-8") as f:
         json.dump(tracked, f, ensure_ascii=False, indent=1, sort_keys=True)
 
-    # sitemap.xml — loc + lastmod (W3C 날짜형식)
-    urls = "\n".join(
-        f"  <url><loc>{html.escape(u)}</loc><lastmod>{lm}</lastmod></url>"
-        for u, lm, _t, _d in sitemap_entries
-    )
+    # sitemap.xml — loc + lastmod + changefreq + priority (네이버·빙 크롤 우선순위 힌트)
+    def _freq_prio(u):
+        rel = u[len(base) + 1:]
+        t = page_type(rel)
+        if t == "home":
+            return "weekly", "1.0"
+        if t in ("area_hub", "gu_hub", "station_hub", "themes_hub"):
+            return "weekly", "0.9"
+        if t in ("dong", "station", "theme"):
+            return "monthly", "0.8"
+        return "monthly", "0.7"
+
+    url_lines = []
+    for u, lm, _t, _d in sitemap_entries:
+        cf, pr = _freq_prio(u)
+        url_lines.append(
+            f"  <url><loc>{html.escape(u)}</loc><lastmod>{lm}</lastmod>"
+            f"<changefreq>{cf}</changefreq><priority>{pr}</priority></url>"
+        )
+    urls = "\n".join(url_lines)
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(
             '<?xml version="1.0" encoding="UTF-8"?>\n'

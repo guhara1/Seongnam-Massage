@@ -1,74 +1,7 @@
 # 메인 페이지 — 허브 역할. 모든 키워드를 밀어 넣지 않고 상세 페이지로 연결한다.
-from .site import BASE_URL, BRAND, PHONE, PHONE_DISPLAY
+# 구조화 데이터(JSON-LD)·네이버 소유확인 메타는 build.py 가 전 페이지에 일괄 주입한다.
+from .site import BRAND, PHONE, PHONE_DISPLAY
 from .pricing import PRICING
-
-_JSONLD = f"""<meta name="naver-site-verification" content="77b8472bae3f7d3dbca94e2d897f960f9984049c" />
-<script type="application/ld+json">
-{{
-  "@context": "https://schema.org",
-  "@type": "HealthAndBeautyBusiness",
-  "name": "{BRAND}",
-  "telephone": "{PHONE}",
-  "url": "{BASE_URL}/",
-  "image": "{BASE_URL}/assets/og-image.png",
-  "description": "성남 전지역 방문 출장마사지·홈타이 예약 안내",
-  "areaServed": {{
-    "@type": "AdministrativeArea",
-    "name": "경기도 성남시"
-  }},
-  "openingHours": "Mo-Su 00:00-24:00",
-  "priceRange": "₩90,000 - ₩180,000"
-}}
-</script>
-<script type="application/ld+json">
-{{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {{
-      "@type": "Question",
-      "name": "성남 전지역 방문이 가능한가요?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "수정구, 중원구, 분당구 전지역이 방문 범위입니다. 정확한 가능 여부는 예약 시간과 위치, 배정 상황에 따라 전화로 확인해 드립니다."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "모란역이나 판교역 근처 숙소도 가능한가요?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "주요 역세권은 역 상세 페이지에서 주변 생활권과 함께 안내합니다. 자택은 물론 오피스텔, 호텔 등 숙소 방문도 가능합니다."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "정자1동, 야탑2동 같은 행정동 페이지는 왜 없나요?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "숫자로 나뉜 행정동은 정자동, 야탑동 같은 대표 동 페이지에서 통합 안내합니다. 같은 생활권을 쪼개 중복 페이지를 만들지 않기 위한 원칙입니다."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "당일 예약도 가능한가요?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "배정이 가능하면 당일 방문도 진행됩니다. 다만 저녁 시간대와 주말은 문의가 몰리므로 한두 시간 전 사전 예약을 권장합니다."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "관리 종류는 어디에서 고르나요?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "스웨디시, 타이마사지, 아로마테라피 등 테마별 안내 페이지에서 특징과 추천 대상을 비교한 뒤 코스안내에서 시간을 정하시면 됩니다."
-      }}
-    }}
-  ]
-}}
-</script>
-"""
 
 _HERO = f"""<section class="hero">
   <div class="hero-inner">
@@ -257,6 +190,5 @@ PAGE = {
 </section>
 """,
     "hero": _HERO,
-    "extra_head": _JSONLD,
     "breadcrumb": [],
 }

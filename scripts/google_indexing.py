@@ -4,7 +4,7 @@
 사전 준비 (1회):
   1. Google Cloud Console에서 프로젝트 생성 → "Web Search Indexing API" 사용 설정
   2. 서비스 계정 생성 → JSON 키 다운로드
-  3. Search Console 속성(seongnam-massage.pages.dev)에 서비스 계정 이메일을
+  3. Search Console 속성(seongnam-massage.netlify.app)에 서비스 계정 이메일을
      '소유자' 권한으로 추가
   4. pip install google-auth requests
 

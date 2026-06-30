@@ -1,5 +1,8 @@
 # 사이트 공통 설정
-BASE_URL = "https://seongnam-massage.pages.dev"
+BASE_URL = "https://seongnam-massage.netlify.app"
+
+# 네이버 서치어드바이저 사이트 소유확인 코드 (메인 페이지에만 출력).
+NAVER_SITE_VERIFICATION = "150a62a6c1993e08a082e0ef1547135220a55463"
 
 # IndexNow 인증 키 — 루트의 {키}.txt 파일과 항상 일치해야 한다 (빌드가 자동 생성).
 INDEXNOW_KEY = "d23a18c6cdcb4ef78795c3fffbaddd03"

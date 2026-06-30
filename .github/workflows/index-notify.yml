@@ -47,7 +47,7 @@ jobs:
           else
             URLS=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" \
               | grep 'index.html$' | sed 's|index.html$||' \
-              | sed 's|^|https://seongnam-massage.pages.dev/|' | head -180)
+              | sed 's|^|https://seongnam-massage.netlify.app/|' | head -180)
             if [ -z "$URLS" ]; then echo "변경 페이지 없음"; exit 0; fi
             python3 scripts/google_indexing.py $URLS
           fi
